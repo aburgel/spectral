@@ -27,7 +27,7 @@ import { Dictionary } from '@stoplight/types';
 import * as eol from 'eol';
 import * as fs from 'fs';
 import { template } from 'lodash';
-import { IRuleResult } from '../../types';
+import { IRuleResult } from '../../../types';
 import { Formatter } from '../types';
 import { getHighestSeverity, getSeverityName, getSummary, getSummaryForSource, groupBySource } from '../utils';
 
@@ -39,7 +39,7 @@ const pageTemplate = template(eol.lf(fs.readFileSync(path.join(__dirname, 'html-
 const messageTemplate = template(eol.lf(fs.readFileSync(path.join(__dirname, 'html-template-message.html'), 'utf8')));
 const resultTemplate = template(eol.lf(fs.readFileSync(path.join(__dirname, 'html-template-result.html'), 'utf8')));
 
-function renderMessages(messages: IRuleResult[], parentIndex: number) {
+function renderMessages(messages: IRuleResult[], parentIndex: number): string {
   return messages
     .map(message => {
       const line = message.range.start.line + 1;
@@ -57,7 +57,7 @@ function renderMessages(messages: IRuleResult[], parentIndex: number) {
     .join('\n');
 }
 
-function renderResults(groupedResults: Dictionary<IRuleResult[]>) {
+function renderResults(groupedResults: Dictionary<IRuleResult[]>): string {
   return Object.keys(groupedResults)
     .map(
       (source, index) =>
